@@ -2,6 +2,10 @@
 
 A hands-on project demonstrating containerization of a Spring Boot application with a persistent MySQL database and a Redis caching layer, orchestrated using Docker Compose.
 
+## Prerequisites
+- Docker & Docker Compose installed
+- Java 17 and Maven installed (for building the jar)
+
 ## What this project demonstrates
 - Dockerizing a Spring Boot application (writing a Dockerfile, building images)
 - Multi-container orchestration using Docker Compose
@@ -19,6 +23,8 @@ A hands-on project demonstrating containerization of a Spring Boot application w
 - Docker & Docker Compose
 
 ## Architecture
+[Client] -> [Spring Boot App Container] -> [MySQL Container]
+                                         -> [Redis Container]
 ## Running locally
 
 1. Clone the repo
@@ -55,6 +61,7 @@ DELETE http://localhost:8080/cache/1
 - Containers communicate using service names (e.g., `mysqldb`, `redis`) defined in `docker-compose.yml`, not `localhost`.
 - Objects cached in Redis must implement `Serializable`.
 - Docker images are immutable snapshots, code changes require rebuilding the image, not just restarting the container.
+- @CacheEvict is used to manually invalidate cache entries, mimicking how real systems clear stale cache after data updates
 
 ## Note
 Credentials used here (root/root) are for local development only.
