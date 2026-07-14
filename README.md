@@ -40,8 +40,16 @@ docker-compose up -d --build
 4. Test the API (using Postman or curl)
 
 Add a book:
+POST http://localhost:8080/add
+Content-Type: application/json
+{ "id": 1, "name": "Clean Code", "author": "Robert Martin" }
+
 Fetch a book (first call hits MySQL, subsequent calls are served from Redis cache):
+GET http://localhost:8080/book/1
+
 Clear cache:
+DELETE http://localhost:8080/cache/1
+
 ## Key learnings
 - `depends_on` alone doesn't wait for a service to be ready, only that its container has started. Health checks are needed to properly sequence startup.
 - Containers communicate using service names (e.g., `mysqldb`, `redis`) defined in `docker-compose.yml`, not `localhost`.
